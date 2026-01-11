@@ -16,3 +16,4 @@ class TrimStrings extends Middleware
         'password_confirmation',
     ];
 }
+//default trims spaces in names but not the passwrods 

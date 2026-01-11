@@ -13,12 +13,12 @@ class EmergencyNotification extends Model
         'message',
     ];
 
-    public function doctor(): BelongsTo
+    public function doctor(): BelongsTo   //one dr to one noti
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }
 
-    public function receptionist(): BelongsTo
+    public function receptionist(): BelongsTo //one rece to one noti
     {
         return $this->belongsTo(User::class, 'receptionist_id');
     }

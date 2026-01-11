@@ -15,20 +15,18 @@
 
             {{-- Emergency modal (server-filled + reused by polling) --}}
             <div
-                id="emergency-modal"
-                class="{{ $latestEmergency ? 'flex' : 'hidden' }} fixed inset-0 z-40 items-center justify-center bg-black/40 p-4"
-                aria-hidden="{{ $latestEmergency ? 'false' : 'true' }}"
-            >
+    id="emergency-modal"
+    class="hidden fixed inset-0 z-40 items-center justify-center bg-black/40 p-4"
+    aria-hidden="true"
+>
+
                 <div class="w-full max-w-lg rounded-3xl overflow-hidden border border-rose-200 bg-white shadow-xl">
                     <div class="px-6 py-4 bg-rose-50 border-b border-rose-200">
                         <div class="flex items-start justify-between gap-3">
                             <div>
                                 <h3 class="text-lg font-semibold text-rose-800">Emergency Alert</h3>
-                                <p id="emergency-time" class="text-xs text-rose-600 mt-1">
-                                    @if($latestEmergency)
-                                        Received at {{ $latestEmergency->created_at->format('M d, Y H:i') }}
-                                    @endif
-                                </p>
+                                <p id="emergency-time" class="text-xs text-rose-600 mt-1"></p>
+
                             </div>
 
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-600 text-white">
@@ -38,11 +36,8 @@
                     </div>
 
                     <div class="px-6 py-5">
-                        <p id="emergency-message" class="text-slate-800 whitespace-pre-line">
-                            @if($latestEmergency)
-                                {{ $latestEmergency->message }}
-                            @endif
-                        </p>
+                       <p id="emergency-message" class="text-slate-800 whitespace-pre-line"></p>
+
                     </div>
 
                     <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-2">
@@ -84,7 +79,8 @@
 
                         <div class="px-4 py-3 rounded-2xl bg-rose-50 border border-rose-100">
                             <p class="text-xs font-semibold text-rose-700 uppercase tracking-wide">Alerts</p>
-                            <p class="mt-1 text-2xl font-semibold text-rose-800">{{ $latestEmergency ? 1 : 0 }}</p>
+                           <p id="alerts-count" class="mt-1 text-2xl font-semibold text-rose-800">0</p>
+
                             <p class="text-xs text-rose-700">latest</p>
                         </div>
                     </div>
@@ -226,12 +222,18 @@
             const timeEl = document.getElementById('emergency-time');
 
             function hideModal() {
+                if (alertsCountEl) alertsCountEl.textContent = '0';
+
+            
+                
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
                 modal.setAttribute('aria-hidden', 'true');
             }
 
             function showModal(notification) {
+                if (alertsCountEl) alertsCountEl.textContent = '1';
+
                 msgEl.textContent = notification.message || '';
                 timeEl.textContent = 'Received at ' + (notification.created_at || '');
 
@@ -248,7 +250,9 @@
             });
 
             // Polling for new emergency notifications
-            let lastNotificationId = {{ $latestEmergency?->id ?? 'null' }};
+           let lastNotificationId = null;
+const alertsCountEl = document.getElementById('alerts-count');
+
 
             async function pollEmergency() {
                 try {

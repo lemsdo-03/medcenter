@@ -8,3 +8,4 @@ class PreventRequestsDuringMaintenance extends Middleware
 {
     //
 }
+//default 

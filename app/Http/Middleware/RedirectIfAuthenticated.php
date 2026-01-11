@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
+// redirects users who are already logged in away from login/register pages to /dashboard
 class RedirectIfAuthenticated
 {
     public function handle($request, Closure $next, ...$guards)

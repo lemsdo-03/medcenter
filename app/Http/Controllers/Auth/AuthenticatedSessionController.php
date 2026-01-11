@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the login view. lareavel breez
      */
     public function create(): View
     {
@@ -26,22 +26,22 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); //create a new session
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**
-     * Destroy an authenticated session.
+     * log out
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard('web')->logout(); //“log the current user out of the normal website session
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-   return redirect()->route('login');
+   return redirect()->route('login'); //redirect to login page
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DoctorAvailability extends Model
 {
-    protected $fillable = [
+    protected $fillable = [ 
         'doctor_id',
         'day_of_week',
         'start_time',
@@ -17,9 +17,9 @@ class DoctorAvailability extends Model
 
     protected $casts = [
         'is_available' => 'boolean',
-    ];
+    ]; //makes it real data true fauls instend of 0 1
 
-    public function doctor(): BelongsTo
+    public function doctor(): BelongsTo //each row belong to 1 dr
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }

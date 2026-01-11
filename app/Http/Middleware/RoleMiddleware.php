@@ -16,16 +16,16 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        if (!Auth::check()) {//of not logged in
+            return redirect()->route('login');//redirect to loging page
         }
 
-        $user = Auth::user();
+        $user = Auth::user(); //get the logged in
 
-        if (!in_array($user->role, $roles)) {
+        if (!in_array($user->role, $roles)) { //if its not inside the roles we created it will show errors
             abort(403, 'Unauthorized');
         }
 
-        return $next($request);
+        return $next($request);//if the role exist go on go the controller
     }
 }

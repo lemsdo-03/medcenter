@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Appointment extends Model
 {
-    protected $fillable = [
+    protected $fillable = [ //this can be filled in the appointment table
         'patient_id',
         'doctor_id',
         'appointment_date',
@@ -17,22 +17,22 @@ class Appointment extends Model
         'is_paid',
     ];
 
-    protected $casts = [
+    protected $casts = [ //real time
         'appointment_date' => 'datetime',
         'is_paid' => 'boolean',
     ];
 
-    public function patient(): BelongsTo
+    public function patient(): BelongsTo //one patien on appointment 
     {
         return $this->belongsTo(Patient::class);
     }
 
-    public function doctor(): BelongsTo
+    public function doctor(): BelongsTo //one dr on appoin
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }
 
-    public function medicalNotes(): HasMany
+    public function medicalNotes(): HasMany //one appointment can have amny med notes
     {
         return $this->hasMany(MedicalNote::class);
     }

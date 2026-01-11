@@ -64,7 +64,7 @@ Route::get('/dashboard', function () {
     
     switch ($user->role) {
         case 'admin':
-            return redirect()->route('admin.staff.index');
+            return redirect()->route('.indeadmin.staffx');
         case 'doctor':
             return redirect()->route('doctor.dashboard');
         case 'receptionist':
