@@ -4,9 +4,7 @@
             <h2 class="text-xl font-semibold text-slate-900 leading-tight">
                 {{ __('Doctor Dashboard') }}
             </h2>
-            <p class="text-sm text-slate-500 mt-1">
-                Overview for {{ now()->format('l, F j, Y') }}
-            </p>
+           
         </div>
     </x-slot>
 

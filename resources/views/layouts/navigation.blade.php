@@ -23,6 +23,26 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if(Auth::user()->role === 'doctor')
+                        <x-nav-link
+                            :href="route('doctor.chat.index')"
+                            :active="request()->routeIs('doctor.chat.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Messages
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->role === 'admin')
+                        <x-nav-link
+                            :href="route('admin.complaints.index')"
+                            :active="request()->routeIs('admin.complaints.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Complaints
+                        </x-nav-link>
+                    @endif
+
                     @if(Auth::user()->role === 'receptionist')
                         <x-nav-link
                             :href="route('receptionist.patients.index')"

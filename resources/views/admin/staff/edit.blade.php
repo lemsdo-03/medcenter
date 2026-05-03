@@ -113,6 +113,22 @@
                         <x-input-error :messages="$errors->get('role')" class="mt-2" />
                     </div>
 
+                    {{-- Specialty (for doctors) --}}
+                    @if($staff->role === 'doctor')
+                        <div>
+                            <x-input-label for="specialty" :value="__('Specialty')" class="text-sm font-medium text-slate-700" />
+                            <x-text-input
+                                id="specialty"
+                                name="specialty"
+                                type="text"
+                                class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-300 focus:ring-0"
+                                :value="old('specialty', $staff->specialty)"
+                                placeholder="e.g. Cardiology, Dermatology"
+                            />
+                            <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
+                        </div>
+                    @endif
+
                     {{-- Actions --}}
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <a href="{{ route('admin.staff.index') }}"

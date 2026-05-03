@@ -17,6 +17,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'specialty',
     ];
 
     protected $hidden = [
@@ -40,5 +41,15 @@ class User extends Authenticatable
     public function availabilities(): HasMany
     {
         return $this->hasMany(DoctorAvailability::class, 'doctor_id');
+    }
+
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'doctor_id');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'doctor_id');
     }
 }

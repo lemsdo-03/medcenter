@@ -36,4 +36,9 @@ class Appointment extends Model
     {
         return $this->hasMany(MedicalNote::class);
     }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

@@ -104,6 +104,28 @@
                         </p>
                     </div>
 
+                    {{-- Specialty (for doctors) --}}
+                    <div x-data="{ role: '{{ old('role', 'doctor') }}' }">
+                        <div x-show="role === 'doctor'" x-cloak>
+                            <x-input-label for="specialty" :value="__('Specialty')" class="text-sm font-medium text-slate-700" />
+                            <x-text-input
+                                id="specialty"
+                                name="specialty"
+                                type="text"
+                                class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-300 focus:ring-0"
+                                :value="old('specialty')"
+                                placeholder="e.g. Cardiology, Dermatology"
+                            />
+                            <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
+                        </div>
+
+                        <script>
+                            document.getElementById('role').addEventListener('change', function() {
+                                document.querySelector('[x-data]').__x.$data.role = this.value;
+                            });
+                        </script>
+                    </div>
+
                     {{-- Actions --}}
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <a href="{{ route('admin.staff.index') }}"

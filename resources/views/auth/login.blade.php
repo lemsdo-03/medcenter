@@ -25,7 +25,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('login') }}" class="mt-6 space-y-4">
+    <form method="POST" action="{{ route('login') }}" class="mt-6 space-y-4" autocomplete="off">
         @csrf
 
         <div>
@@ -37,9 +37,8 @@
                 value="{{ old('email') }}"
                 required
                 autofocus
-                autocomplete="username"
+                autocomplete="off"
                 class="mt-1 w-full rounded-2xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-300 focus:ring-0"
-               
             />
         </div>
 
@@ -50,9 +49,8 @@
                 name="password"
                 type="password"
                 required
-                autocomplete="current-password"
+                autocomplete="off"
                 class="mt-1 w-full rounded-2xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-300 focus:ring-0"
-                
             />
         </div>
 
@@ -61,7 +59,10 @@
             Log in
         </button>
 
-        
+        <p class="text-center text-sm text-slate-500 mt-4">
+            Are you a patient?
+            <a href="{{ route('patient.register') }}" class="text-emerald-700 font-semibold hover:underline">Create an account</a>
+        </p>
     </form>
 </section>
 @endsection

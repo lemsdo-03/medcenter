@@ -37,6 +37,7 @@ class StaffController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'specialty' => $request->role === 'doctor' ? $request->specialty : null,
         ]);
 //redirect to the route
         return redirect()->route('admin.staff.index')->with('success', 'Staff member created successfully.');
@@ -55,6 +56,7 @@ class StaffController extends Controller
         $staff->name = $request->name;
         $staff->email = $request->email;
         $staff->role = $request->role;
+        $staff->specialty = $request->role === 'doctor' ? $request->specialty : null;
 //only update if we choose to
         if ($request->password) {
             $staff->password = Hash::make($request->password);
@@ -101,6 +103,7 @@ class StaffController extends Controller
             'email' => "required|string|email|max:255|{$uniqueEmail}",
             'password' => $staff ? 'nullable|string|min:3|confirmed' : 'required|string|min:3|confirmed',
             'role' => $roleRule,
+            'specialty' => 'nullable|string|max:255',
         ];
     }
 }
