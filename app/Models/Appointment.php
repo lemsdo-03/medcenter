@@ -41,4 +41,14 @@ class Appointment extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    // FR-70 + FR-71: when an appointment is saved as completed, update the patient's visit count / reward
+    protected static function booted(): void
+    {
+        static::saved(function (Appointment $appointment) {
+            if ($appointment->status === 'completed') {
+                $appointment->patient?->syncVisitsAndReward();
+            }
+        });
+    }
 }

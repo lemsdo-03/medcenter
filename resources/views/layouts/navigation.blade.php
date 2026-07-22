@@ -41,6 +41,64 @@
                         >
                             Complaints
                         </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('admin.ratings.index')"
+                            :active="request()->routeIs('admin.ratings.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Ratings
+                        </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->role === 'pharmacist')
+                        <x-nav-link
+                            :href="route('pharmacist.dashboard')"
+                            :active="request()->routeIs('pharmacist.dashboard')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Dashboard
+                        </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('pharmacist.medicines.index')"
+                            :active="request()->routeIs('pharmacist.medicines.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Inventory
+                        </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('pharmacist.categories.index')"
+                            :active="request()->routeIs('pharmacist.categories.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Categories
+                        </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('pharmacist.prescriptions.index')"
+                            :active="request()->routeIs('pharmacist.prescriptions.*') || request()->routeIs('pharmacist.dispenses.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Prescriptions
+                        </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('pharmacist.adjustments.index')"
+                            :active="request()->routeIs('pharmacist.adjustments.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Damage/Returns
+                        </x-nav-link>
+
+                        <x-nav-link
+                            :href="route('pharmacist.reports.daily')"
+                            :active="request()->routeIs('pharmacist.reports.*')"
+                            class="px-4 py-2 rounded-2xl text-slate-700 hover:bg-slate-100"
+                        >
+                            Reports
+                        </x-nav-link>
                     @endif
 
                     @if(Auth::user()->role === 'receptionist')

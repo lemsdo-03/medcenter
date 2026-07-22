@@ -11,16 +11,22 @@ use App\Models\EmergencyNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-//handles the doctor side: shows the dashboard + appointments list/details, polls emergency alerts, manages availability schedule, and lets the doctor view patients and add/store medical notes.
+//
 class DoctorController extends Controller
 {
     //
     private function markPastAppointmentsAsCompleted($doctorId)
     {
-        Appointment::where('doctor_id', $doctorId) //finding the appointment witht the dr id 
-            ->where('status', 'scheduled')//that are still scudeuled 
-            ->where('appointment_date', '<', now())//but the date has passed already
-            ->update(['status' => 'completed']);//change it to completed
+        $pastAppointments = Appointment::where('doctor_id', $doctorId) //finding the appointment witht the dr id
+            ->where('status', 'scheduled')//that are still scudeuled
+            ->where('appointment_date', '<', now())// date has passed already
+            ->get();
+
+        // save each one individually so the visit-count / reward hook fires (FR-70, FR-71)
+        foreach ($pastAppointments as $appointment) {
+            $appointment->status = 'completed';//change it to completed
+            $appointment->save();
+        }
     }
 
     public function dashboard()

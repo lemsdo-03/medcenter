@@ -21,10 +21,13 @@ class Patient extends Model
         'emergency_contact_phone',
         'medical_history',
         'allergies',
+        'visit_count',
+        'reward_available',
     ];
 
     protected $casts = [
         'date_of_birth' => 'date',
+        'reward_available' => 'boolean',
     ];
 
     public function appointments(): HasMany
@@ -60,5 +63,31 @@ class Patient extends Model
     public function notifications(): HasMany
     {
         return $this->hasMany(PatientNotification::class);
+    }
+
+    // FR-70 + FR-71: recount completed visits and grant a reward on every 4th visit
+    public function syncVisitsAndReward(): void
+    {
+        $completed = $this->appointments()->where('status', 'completed')->count();
+
+        // only grant a new reward the moment the patient reaches a new multiple of 4
+        $earnedNewReward = $completed > 0
+            && $completed % 4 === 0
+            && $completed !== $this->visit_count;
+
+        $this->visit_count = $completed;
+
+        if ($earnedNewReward) {
+            $this->reward_available = true;
+        }
+
+        $this->save();
+
+        if ($earnedNewReward) {
+            $this->notifications()->create([
+                'title' => 'Loyalty Reward Earned',
+                'message' => "Congratulations! You have completed {$completed} visits. A discount or free session is now available on your next appointment.",
+            ]);
+        }
     }
 }

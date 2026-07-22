@@ -5,7 +5,7 @@
                 Add New Staff
             </h2>
             <p class="text-sm text-slate-500 mt-1">
-                Create doctor or receptionist accounts.
+                Create doctor, receptionist, or pharmacist accounts.
             </p>
         </div>
     </x-slot>
@@ -96,11 +96,12 @@
                         >
                             <option value="doctor" {{ old('role')=='doctor' ? 'selected' : '' }}>Doctor</option>
                             <option value="receptionist" {{ old('role')=='receptionist' ? 'selected' : '' }}>Receptionist</option>
+                            <option value="pharmacist" {{ old('role')=='pharmacist' ? 'selected' : '' }}>Pharmacist</option>
                         </select>
 
                         <x-input-error :messages="$errors->get('role')" class="mt-2" />
                         <p class="text-xs text-slate-500 mt-2">
-                            Admin can create only Doctor and Receptionist roles.
+                            Admin can create Doctor, Receptionist, and Pharmacist roles.
                         </p>
                     </div>
 

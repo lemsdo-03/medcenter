@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MedicalNote extends Model
 {
@@ -29,5 +30,11 @@ class MedicalNote extends Model
     public function appointment(): BelongsTo
     {
         return $this->belongsTo(Appointment::class);
+    }
+
+    // FR-43: a prescription (medical note) is "Dispensed" once a dispense record exists for it
+    public function dispense(): HasOne
+    {
+        return $this->hasOne(Dispense::class);
     }
 }

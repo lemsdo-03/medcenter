@@ -69,6 +69,7 @@
                                                 'admin' => 'bg-slate-900 text-white',
                                                 'doctor' => 'bg-emerald-50 text-emerald-800 border border-emerald-100',
                                                 'receptionist' => 'bg-slate-100 text-slate-700 border border-slate-200',
+                                                'pharmacist' => 'bg-sky-50 text-sky-800 border border-sky-100',
                                                 default => 'bg-slate-100 text-slate-700 border border-slate-200',
                                             };
                                             $initial = strtoupper(substr($user->name, 0, 1));

@@ -45,6 +45,10 @@
                                class="px-4 py-2 rounded-2xl {{ request()->routeIs('patient.chat.*') ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'text-slate-700 hover:bg-slate-100' }}">
                                 Chat
                             </a>
+                            <a href="{{ route('patient.chatbot.index') }}"
+                               class="px-4 py-2 rounded-2xl {{ request()->routeIs('patient.chatbot.*') ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'text-slate-700 hover:bg-slate-100' }}">
+                                Assistant
+                            </a>
                             <a href="{{ route('patient.notifications.index') }}"
                                class="px-4 py-2 rounded-2xl {{ request()->routeIs('patient.notifications.*') ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'text-slate-700 hover:bg-slate-100' }}">
                                 Notifications
@@ -119,5 +123,7 @@
             </div>
         </main>
     </div>
+
+    @include('layouts.partials.night-mode')
 </body>
 </html>

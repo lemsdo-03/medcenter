@@ -33,6 +33,18 @@
                 </div>
             @endif
 
+            {{-- FR-67: Allergy alert shown to the doctor when the patient has recorded allergies --}}
+            @if(!empty($patient->allergies))
+                <div class="rounded-2xl border border-rose-300 bg-rose-50 px-4 py-3 text-rose-900 text-sm flex items-start gap-3">
+                    <svg class="w-5 h-5 mt-0.5 flex-shrink-0 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                    </svg>
+                    <div>
+                        <span class="font-semibold">Allergy Alert:</span> This patient has recorded allergies — {{ $patient->allergies }}
+                    </div>
+                </div>
+            @endif
+
             <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                 {{-- Top patient header --}}
                 <div class="p-6 border-b border-slate-200">
@@ -125,6 +137,22 @@
                                     <p class="mt-1 text-2xl font-bold text-slate-900">
                                         {{ $patient->medicalNotes->count() ?? 0 }}
                                     </p>
+                                </div>
+                                {{-- FR-70: completed visit counter --}}
+                                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Visits</p>
+                                    <p class="mt-1 text-2xl font-bold text-slate-900">
+                                        {{ $patient->visit_count ?? 0 }}
+                                    </p>
+                                </div>
+                                {{-- FR-71: loyalty reward status --}}
+                                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Reward</p>
+                                    @if($patient->reward_available)
+                                        <p class="mt-1 text-sm font-bold text-emerald-700">Available 🎉</p>
+                                    @else
+                                        <p class="mt-1 text-sm font-semibold text-slate-400">None</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

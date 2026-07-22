@@ -4,6 +4,37 @@
         <p class="text-sm text-slate-500 mt-1">Update your personal information.</p>
     </x-slot>
 
+    {{-- FR-68: popup notification shown when the patient profile is opened --}}
+    @if($popupNotifications->count() > 0)
+        <div x-data="{ open: true }" x-show="open"
+             class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4">
+            <div class="w-full max-w-md rounded-3xl border border-slate-200 bg-white shadow-xl">
+                <div class="flex items-center justify-between p-5 border-b border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-900">Notifications</h3>
+                    <button @click="open = false"
+                            class="h-8 w-8 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition">
+                        &times;
+                    </button>
+                </div>
+                <div class="p-5 space-y-3 max-h-80 overflow-y-auto">
+                    @foreach($popupNotifications as $notification)
+                        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                            <p class="text-sm font-semibold text-slate-900">{{ $notification->title }}</p>
+                            <p class="mt-1 text-sm text-slate-600">{{ $notification->message }}</p>
+                            <p class="mt-2 text-xs text-slate-400">{{ $notification->created_at->diffForHumans() }}</p>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="p-5 border-t border-slate-200 flex justify-end">
+                    <button @click="open = false"
+                            class="px-5 py-2.5 rounded-2xl bg-emerald-700 text-white text-sm font-semibold hover:bg-emerald-800 transition">
+                        Got it
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="max-w-3xl mx-auto">
         <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <form method="POST" action="{{ route('patient.profile.update') }}" class="space-y-5">
@@ -66,7 +97,7 @@
                     <label for="address" class="text-sm font-medium text-slate-700">Address</label>
                     <input id="address" name="address" type="text"
                         value="{{ old('address', $patient->address) }}"
-                        class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50 focus:bg-white focus:border-emerald-300 focus:ring-0" />
+                        class=" ite focus:border-emerald-300 focus:ring-0" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 

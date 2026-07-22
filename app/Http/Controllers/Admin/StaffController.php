@@ -11,13 +11,14 @@ class StaffController extends Controller
 {//shows staff page and stats
     public function index()
     {
-        $staff = User::whereIn('role', ['admin', 'doctor', 'receptionist'])->get();
+        $staff = User::whereIn('role', ['admin', 'doctor', 'receptionist', 'pharmacist'])->get();
 
         $stats = [
             'total' => $staff->count(),
             'admins' => $staff->where('role', 'admin')->count(),
             'doctors' => $staff->where('role', 'doctor')->count(),
             'receptionists' => $staff->where('role', 'receptionist')->count(),
+            'pharmacists' => $staff->where('role', 'pharmacist')->count(),
         ];
 
         return view('admin.staff.index', compact('staff', 'stats'));
@@ -95,8 +96,8 @@ class StaffController extends Controller
         // Existing admin user can only stay admin
         //$ means this is a variable
         $roleRule = $staff && $staff->role === 'admin'
-            ? 'required|in:admin' //if yes then it stays admin if no dr or res
-            : 'required|in:doctor,receptionist';
+            ? 'required|in:admin' //if yes then it stays admin if no dr/res/pharmacist
+            : 'required|in:doctor,receptionist,pharmacist';
 
         return [
             'name' => 'required|string|max:255',

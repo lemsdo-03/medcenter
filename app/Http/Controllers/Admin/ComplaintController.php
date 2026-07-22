@@ -8,19 +8,18 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
-    public function index(Request $request)
+    //FR-69: shows ONLY complaints (managed separately from ratings)
+    public function index()
     {
-        $query = Rating::with(['patient', 'doctor', 'appointment']);
+        $complaints = Rating::with(['patient', 'doctor', 'appointment'])
+            ->where('type', 'complaint')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
-        if ($request->has('type') && in_array($request->type, ['rating', 'complaint'])) {
-            $query->where('type', $request->type);
-        }
-
-        $ratings = $query->orderBy('created_at', 'desc')->paginate(20);
-
-        return view('admin.complaints.index', compact('ratings'));
+        return view('admin.complaints.index', compact('complaints'));
     }
 
+    //shows one complaint in detail
     public function show(Rating $rating)
     {
         $rating->load(['patient', 'doctor', 'appointment']);

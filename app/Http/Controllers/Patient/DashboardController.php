@@ -10,8 +10,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        //find the patient row that belongs to the logged in user
+
         $patient = Patient::where('user_id', auth()->id())->firstOrFail();
 
+        //next 5 upcoming appointments 
+    
         $upcomingAppointments = $patient->appointments()
             ->with('doctor')
             ->where('status', 'scheduled')
@@ -20,11 +24,13 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        //last 5 notifications
         $recentNotifications = $patient->notifications()
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
+        //just countnotifications i didnt read 
         $unreadNotifications = $patient->notifications()
             ->where('is_read', false)
             ->count();
@@ -37,6 +43,7 @@ class DashboardController extends Controller
             ->get()
             ->sum('unread_count');
 
+       
         return view('patient.dashboard', compact(
             'patient',
             'upcomingAppointments',

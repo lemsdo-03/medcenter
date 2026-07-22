@@ -107,6 +107,7 @@
                             >
                                 <option value="doctor" {{ $staff->role=='doctor' ? 'selected' : '' }}>Doctor</option>
                                 <option value="receptionist" {{ $staff->role=='receptionist' ? 'selected' : '' }}>Receptionist</option>
+                                <option value="pharmacist" {{ $staff->role=='pharmacist' ? 'selected' : '' }}>Pharmacist</option>
                             </select>
                         @endif
 

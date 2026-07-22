@@ -12,7 +12,15 @@ class ProfileController extends Controller
     public function edit()
     {
         $patient = Patient::where('user_id', auth()->id())->firstOrFail();
-        return view('patient.profile.edit', compact('patient'));
+
+        // FR-68: latest unread notifications shown as a popup when the profile is opened
+        $popupNotifications = $patient->notifications()
+            ->where('is_read', false)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('patient.profile.edit', compact('patient', 'popupNotifications'));
     }
 
     public function update(Request $request)
