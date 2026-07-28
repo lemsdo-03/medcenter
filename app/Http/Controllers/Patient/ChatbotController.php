@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class ChatbotController extends Controller
 {
-    //the chatbot page. FR-52: greet the patient automatically when it opens.
+    //the chatbot page.. greet the patient 
     public function index()
     {
-        $greeting = 'hello dear patient How can I help you today?';
+        $greeting = 'hello How can I help you today?';
         $menu = $this->mainMenu();
 
         return view('patient.chatbot.index', compact('greeting', 'menu'));
@@ -62,7 +62,7 @@ class ChatbotController extends Controller
     //build the bot answer for a given topic
     private function respond(?string $topic): array
     {
-        // FR-58: a specialty was chosen -> list its doctors (topic looks like "doctors:Cardiology")
+        // ...specialty was chosen -> list its doctors 
         if ($topic && str_starts_with($topic, 'doctors:')) {
             return $this->doctorsBySpecialty(substr($topic, strlen('doctors:')));
         }
@@ -74,12 +74,12 @@ class ChatbotController extends Controller
 
         return match ($topic) {
             'menu' => $this->reply_('Here is what I can help with:', $this->mainMenu()),
-            'faqs' => $this->faqList(),                 // FR-53
-            'hours' => $this->workingHours(),           // FR-54
-            'location' => $this->location(),            // FR-55
-            'specialties' => $this->specialties(),      // FR-56
-            'booking' => $this->booking(),              // FR-57
-            'downloads' => $this->downloads(),          // FR-60
+            'faqs' => $this->faqList(),                 
+            'hours' => $this->workingHours(),           
+            'location' => $this->location(),            
+            'specialties' => $this->specialties(),      
+            'booking' => $this->booking(),              
+            'downloads' => $this->downloads(),          
             default => $this->reply_(
                 "Sorry, I didn't quite get that. You can pick one of the options below:",
                 $this->mainMenu()
@@ -87,7 +87,7 @@ class ChatbotController extends Controller
         };
     }
 
-    // ---- individual answers ----
+    //make botton for each qeustion
 
     private function faqList(): array
     {
@@ -129,7 +129,7 @@ class ChatbotController extends Controller
 
     private function specialties(): array
     {
-        // FR-56: list the specialties that actually have doctors
+        // list the specialties that actually have doctors
         $specialties = User::where('role', 'doctor')
             ->whereNotNull('specialty')
             ->where('specialty', '!=', '')
@@ -152,7 +152,7 @@ class ChatbotController extends Controller
 
     private function doctorsBySpecialty(string $specialty): array
     {
-        // FR-58: doctors for the chosen specialty
+        // doctors for the chosen specialty
         $doctors = User::where('role', 'doctor')
             ->where('specialty', $specialty)
             ->orderBy('name')

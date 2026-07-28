@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class MedicineController extends Controller
 {
-    //inventory list (FR-40) with search by name or code (FR-41)
+    //inventory list with search by name or code 
     public function index(Request $request)
     {
         $query = Medicine::with('category');
@@ -46,7 +46,7 @@ class MedicineController extends Controller
         return redirect()->route('pharmacist.medicines.index')->with('success', 'Medicine added successfully.');
     }
 
-    //edit medicine (FR-38: update info / FR-45: expiry / FR-50: classify by category)
+    //edit medicine 
     public function edit(Medicine $medicine)
     {
         $categories = Category::orderBy('name')->get();

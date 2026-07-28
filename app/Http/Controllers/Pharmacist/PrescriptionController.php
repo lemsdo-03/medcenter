@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
 {
-    //FR-42: prescriptions received from doctors (medical notes that contain a prescription)
+    //prescriptions received from doctors (medical notes that contain a prescription)
     public function index(Request $request)
     {
         $query = MedicalNote::with(['patient', 'doctor', 'dispense'])
             ->whereNotNull('prescription')
             ->where('prescription', '!=', '');
 
-        // optional filter: pending vs dispensed
+       
         if ($request->status === 'pending') {
             $query->whereDoesntHave('dispense');
         } elseif ($request->status === 'dispensed') {
@@ -27,7 +27,7 @@ class PrescriptionController extends Controller
         return view('pharmacist.prescriptions.index', compact('prescriptions'));
     }
 
-    //FR-47: view the prescription with its owner (patient) information
+    //: view the prescription with its information
     public function show(MedicalNote $prescription)
     {
         $prescription->load(['patient', 'doctor', 'dispense.items']);

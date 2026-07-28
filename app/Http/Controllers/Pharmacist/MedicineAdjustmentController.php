@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class MedicineAdjustmentController extends Controller
 {
-    //FR-49: list every damaged / returned record
+    // list every damaged / returned record
     public function index()
     {
         $adjustments = MedicineAdjustment::with(['medicine', 'pharmacist'])
@@ -19,16 +19,16 @@ class MedicineAdjustmentController extends Controller
         return view('pharmacist.adjustments.index', compact('adjustments'));
     }
 
-    //show the record form (a medicine can be pre-selected from its row)
+    //show the record form 
     public function create(Request $request)
     {
         $medicines = Medicine::orderBy('name')->get();
-        $selected = $request->medicine; // optional pre-selected medicine id
+        $selected = $request->medicine; 
 
         return view('pharmacist.adjustments.create', compact('medicines', 'selected'));
     }
 
-    //FR-49: store the record and reduce stock (alt scenario: invalid quantity)
+    // store the record and reduce stock 
     public function store(Request $request)
     {
         $request->validate([

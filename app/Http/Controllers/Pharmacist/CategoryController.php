@@ -15,13 +15,13 @@ class CategoryController extends Controller
         return view('pharmacist.categories.index', compact('categories'));
     }
 
-    //show the add category form (FR-37)
+    //show the add category form 
     public function create()
     {
         return view('pharmacist.categories.create');
     }
 
-    //save a new category (FR-37: name must be unique)
+    //save a new category 
     public function store(Request $request)
     {
         $request->validate([
@@ -50,7 +50,7 @@ class CategoryController extends Controller
         return redirect()->route('pharmacist.categories.index')->with('success', 'Category updated successfully.');
     }
 
-    //delete a category (FR-39: cannot delete if it still contains medicines)
+    //delete a category 
     public function destroy(Category $category)
     {
         if ($category->medicines()->count() > 0) {

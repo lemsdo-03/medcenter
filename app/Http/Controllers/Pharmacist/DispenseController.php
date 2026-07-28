@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class DispenseController extends Controller
 {
-    //FR-43: open the dispense form for a prescription (pick which medicines + quantities to hand out)
+    //open the dispense form for a prescription (pick which medicines + quantities to hand out)
     public function create(MedicalNote $prescription)
     {
         // a prescription can only be dispensed once
@@ -26,7 +26,7 @@ class DispenseController extends Controller
         return view('pharmacist.dispenses.create', compact('prescription', 'medicines'));
     }
 
-    //FR-43: process the dispense, decrease stock, build the invoice
+    // process the dispense, decrease stock, build the invoice
     public function store(Request $request, MedicalNote $prescription)
     {
         if ($prescription->dispense) {
@@ -42,7 +42,7 @@ class DispenseController extends Controller
 
         $medicines = Medicine::whereIn('id', collect($request->items)->pluck('medicine_id'))->get()->keyBy('id');
 
-        // FR-43 alternative scenario: medicine unavailable / not enough stock
+        // Flternative scenario: medicine unavailable / not enough stock
         foreach ($request->items as $item) {
             $medicine = $medicines[$item['medicine_id']];
             if ($medicine->quantity < $item['quantity']) {

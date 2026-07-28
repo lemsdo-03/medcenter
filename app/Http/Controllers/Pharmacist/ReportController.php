@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    //FR-46: daily sales record (defaults to today, date can be chosen)
+    //daily sales record 
     public function daily(Request $request)
     {
         $date = $request->filled('date') ? Carbon::parse($request->date) : today();
@@ -26,7 +26,7 @@ class ReportController extends Controller
         return view('pharmacist.reports.daily', compact('dispenses', 'total', 'date'));
     }
 
-    //FR-51: monthly most requested medicines (defaults to current month)
+    //monthly most requested medicines 
     public function monthly(Request $request)
     {
         // month input format: YYYY-MM

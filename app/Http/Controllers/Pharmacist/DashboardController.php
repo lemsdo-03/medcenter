@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    //pharmacist home: quick stats + the low-stock alert (FR-44)
+    //pharmacist home: quick stats + the low-stock alert 
     public function index()
     {
         $stats = [
             'medicines' => Medicine::count(),
             'categories' => Category::count(),
-            // pending prescriptions = medical notes that have a prescription but were not dispensed yet (FR-42)
+            // pending prescriptions = medical notes that have a prescription but were not dispensed yet 
             'pending' => MedicalNote::whereNotNull('prescription')
                 ->where('prescription', '!=', '')
                 ->whereDoesntHave('dispense')
                 ->count(),
-            // today's sales total (FR-46)
+            // today's sales total 
             'todaySales' => Dispense::whereDate('created_at', today())->sum('total'),
         ];
 

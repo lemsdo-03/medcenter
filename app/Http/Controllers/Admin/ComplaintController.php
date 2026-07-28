@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
-    //FR-69: shows ONLY complaints (managed separately from ratings)
+  
     public function index()
     {
         $complaints = Rating::with(['patient', 'doctor', 'appointment'])

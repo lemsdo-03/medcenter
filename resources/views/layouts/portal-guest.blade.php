@@ -85,7 +85,7 @@
                                 imgEl.src = images[i];
                                 imgEl.onload = () => imgEl.classList.remove('opacity-0');
                             }, 250);
-                        }, 10000);
+                        }, 4000);
                     });
                 </script>
             </section>
